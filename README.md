@@ -1,6 +1,9 @@
 # imageUploaderDemo
 Image Uploader made with Nuxt + Vuex + Pouchdb + Vuetify
 
+Example Site: http://image-uploader-demo.surge.sh/#/
+Files are stored within the users localstorage So they wll be able to see their images whenever visit the URL
+
 
 ## Build Setup
 
