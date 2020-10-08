@@ -5,7 +5,7 @@
         <v-layout column>
           <v-layout justify-center align-center>
             <v-col>
-              <div class="text-sm-center mt-5 display-1">Image Uploader demo</div>
+              <div class="text-sm-center mt-5 display-1" font-weight-bold>Up Local</div>
 
               <div class="mt-3">Image title</div>
               <v-text-field label="image-title" v-model="title"></v-text-field>
@@ -37,7 +37,7 @@
             <v-layout wrap justify-center align-center>
               <!-- <v-col
                 ref="rel"
-             
+
                 v-for="imgSrc in sources"
                 :key="imgSrc.index"
               >
@@ -57,7 +57,7 @@
                           <v-card-title v-text="imgSrc.title"></v-card-title>
                         </v-img>
                         <v-card-actions>
-                          <v-spacer></v-spacer>                          
+                          <v-spacer></v-spacer>
                           <v-btn icon @click="removeFile(imgSrc)">
                             <v-icon>mdi-close</v-icon>
                           </v-btn>
