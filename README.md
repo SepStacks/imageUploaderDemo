@@ -1,7 +1,7 @@
 # imageUploaderDemo
 Image Uploader made with Nuxt + Vuex + Pouchdb + Vuetify
 
-Example Site: https://image-loader.netlify.com/
+Example Site: https://uplocal.netlify.app/
 Files are stored within the users localstorage So they wll be able to see their images whenever the url is used
 
 ## Build Setup
