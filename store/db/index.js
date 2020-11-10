@@ -2,11 +2,11 @@ import {db} from '../../plugins/pouch'
 
 
 /*** State **/
-const state = {
+const state = () => ({
     todos: [],
     newTodo: ''
 
-};
+});
 
 /*** Getters **/
 const getters = {
@@ -25,7 +25,7 @@ const mutations = {
 /*** Actions **/
 const actions = {
     syncAll () {
-      		//   let self = this;  
+      		//   let self = this;
               db.allDocs({
                 include_docs: true,
                 attachments: true
@@ -36,7 +36,7 @@ const actions = {
                 console.log(err);
             });
 
-	
+
       }
 };
 

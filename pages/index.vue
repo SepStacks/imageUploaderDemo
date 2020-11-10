@@ -1,24 +1,40 @@
 <template>
-  <v-container fill-height>
-    <v-layout column justify-center align-center>
-      <v-card width="100%" flat color="transparent">
-        <v-layout column>
-          <v-layout justify-center align-center>
+  <v-container
+    fill-height
+    fluid
+    class="px-5"
+  >
+    <v-card
+      width="100%"
+      flat
+      color="transparent"
+    >
+      <v-row column align="center" justify="center">
+        <v-col cols="12" md="4">
+          <v-row justify="center">
             <v-col>
-              <div class="text-sm-center mt-5 display-1" font-weight-bold>Up Local</div>
 
-              <div class="mt-3">Image title</div>
-              <v-text-field label="image-title" v-model="title"></v-text-field>
-              <div>Upload image</div>
+              <div class="mt-3 font-weight-bold text-uppercase ">Image title</div>
+              <v-text-field
+                label="image-title"
+                class="text-uppercase"
+                v-model="title"
+              ></v-text-field>
+              <div class="font-weight-bold text-uppercase">Upload image</div>
 
               <v-file-input
+                class="text-uppercase"
                 v-model="file"
                 label="Select..."
                 accept="image/*"
                 @change="onFilePicked()"
               >
                 <template v-slot:selection="{ text }">
-                  <v-chip small label color="primary">{{ text }}</v-chip>
+                  <v-chip
+                    small
+                    label
+                    color="primary"
+                  >{{ text }}</v-chip>
                 </template>
               </v-file-input>
               <v-btn
@@ -27,59 +43,85 @@
                 @click.stop="onUpload"
               >UPLOAD</v-btn>
             </v-col>
-          </v-layout>
+          </v-row>
+        </v-col>
 
-          <v-card-title primary-title>
-            <h3 class="headline mb-0">Result</h3>
-          </v-card-title>
+        <v-col cols="12" md="6"   id="scrolling-techniques-6"
+      class="overflow-y-auto"
+      max-height="600">
 
-          <v-container fluid>
-            <v-layout wrap justify-center align-center>
-              <!-- <v-col
-                ref="rel"
-
+          <v-container  style="height: 500px;">
+            <v-row
+              align="center"
+              justify="center"
+              v-if="sources.length > 0"
+            >
+              <v-col
                 v-for="imgSrc in sources"
-                :key="imgSrc.index"
+                :key="imgSrc.id"
+                class="d-flex child-flex"
+                cols="12"
+                lg="4"
+                md="6"
+                sm="12"
               >
-              -->
+                <v-card >
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      icon
+                      @click="removeFile(imgSrc)"
+                    >
+                      <v-icon>mdi-close</v-icon>
+                    </v-btn>
+                  </v-card-actions>
+                  <v-img
 
-              <template>
-                <v-container>
-                  <v-row align="center" justify="center">
-                    <v-col v-for="imgSrc in sources" :key="imgSrc.id" cols="12" md="4" sm="6">
-                      <v-card>
-                        <v-img
-                          :src="imgSrc.blobURL"
-                          class="white--text align-end"
-                          gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-                          height="200px"
-                        >
-                          <v-card-title v-text="imgSrc.title"></v-card-title>
-                        </v-img>
-                        <v-card-actions>
-                          <v-spacer></v-spacer>
-                          <v-btn icon @click="removeFile(imgSrc)">
-                            <v-icon>mdi-close</v-icon>
-                          </v-btn>
-                        </v-card-actions>
-                      </v-card>
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </template>
+                     max-height="150"
+                    max-width="250"
+                    :src="imgSrc.blobURL"
+                    class="white--text align-end"
+                    gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                  >
+                   <v-card-title v-text="imgSrc.title"></v-card-title>
+                      <!-- <span
+                class="headline white--text pl-4 pt-4 d-inline-block"
+                v-text="card"
+              ></span> -->
 
-              <!-- <img id="blobbyImg" :src="imgSrc.blobURL" width="200px" /> -->
-            </v-layout>
+                    <template v-slot:placeholder>
+                      <v-row
+                        class="fill-height ma-0"
+                        align="center"
+                        justify="center"
+                      >
+                        <v-progress-circular
+                          indeterminate
+                          color="grey lighten-5"
+                        ></v-progress-circular>
+                      </v-row>
+                    </template>
+                  </v-img>
+
+                </v-card>
+              </v-col>
+            </v-row>
+
+            <v-row v-else>
+              <div> NO IMAge</div>
+            </v-row>
+
           </v-container>
-        </v-layout>
-      </v-card>
-    </v-layout>
+
+        </v-col>
+      </v-row>
+    </v-card>
   </v-container>
 </template>
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       sources: [],
       imageURL: '',
@@ -91,12 +133,12 @@ export default {
   },
   computed: {},
   methods: {
-    removeFile(imgSrc) {
+    removeFile (imgSrc) {
       // console.log(imgSrc)
       self = this
       this.db
         .get(imgSrc.id, imgSrc.rev)
-        .then(function(doc) {
+        .then(function (doc) {
           console.log(doc)
           doc._deleted = true
           self.db.put(doc)
@@ -105,16 +147,16 @@ export default {
             self.sources.splice(self.sources.indexOf(imgSrc), 1)
           }, 100)
         })
-        .then(function(result) {
+        .then(function (result) {
           // handle result
           console.log(result)
         })
-        .catch(function(err) {
+        .catch(function (err) {
           console.log(err)
         })
     },
 
-    onFilePicked() {
+    onFilePicked () {
       let reader = new FileReader()
       reader.onload = () => {
         this.url = reader.result
@@ -122,7 +164,7 @@ export default {
       reader.readAsDataURL(this.file)
     },
 
-    onUpload() {
+    onUpload () {
       var attachmentID = this.file.name
 
       var imgSrc = {
@@ -139,10 +181,10 @@ export default {
       // var attachment =
       this.db
         .put(imgSrc)
-        .then(function(result) {
+        .then(function (result) {
           console.log(result)
         })
-        .catch(function(err) {
+        .catch(function (err) {
           console.log(err)
         })
 
@@ -150,7 +192,7 @@ export default {
       this.file = null
     },
 
-    preview() {
+    preview () {
       self = this
       this.db
         .allDocs({
@@ -159,7 +201,7 @@ export default {
           descending: true,
           binary: true
         })
-        .then(function(result) {
+        .then(function (result) {
           var imgData = ''
           imgData = result.rows.map(row => row.doc)
           var each = ''
@@ -167,7 +209,7 @@ export default {
 
           for (const key of imgData) {
             for (var k in key._attachments) {
-              self.db.getAttachment(key._id, k).then(function(blob) {
+              self.db.getAttachment(key._id, k).then(function (blob) {
                 var blobURL = self.blobUtil.createObjectURL(blob)
 
                 var found = self.sources.find(source => source.id === key._id)
@@ -187,10 +229,10 @@ export default {
     }
   },
 
-  mounted() {
+  mounted () {
     this.preview()
   },
-  created() {
+  created () {
     console.log(this.$refs)
     //Update whenever remote data change
     this.db
