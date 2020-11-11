@@ -13,9 +13,4 @@ Vue.mixin({
       }
     },
 
-   created() {
-  
-   }
-  
-    
   })

@@ -50,7 +50,7 @@
       class="overflow-y-auto"
       max-height="600">
 
-          <v-container  style="height: 500px;">
+          <v-container id="scrollbar"  style="height: 500px;">
             <v-row
               align="center"
               justify="center"
@@ -66,19 +66,10 @@
                 sm="12"
               >
                 <v-card >
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn
-                      icon
-                      @click="removeFile(imgSrc)"
-                    >
-                      <v-icon>mdi-close</v-icon>
-                    </v-btn>
-                  </v-card-actions>
-                  <v-img
 
+                  <v-img
+                      contain
                      max-height="150"
-                    max-width="250"
                     :src="imgSrc.blobURL"
                     class="white--text align-end"
                     gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
@@ -102,7 +93,15 @@
                       </v-row>
                     </template>
                   </v-img>
-
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      icon
+                      @click="removeFile(imgSrc)"
+                    >
+                      <v-icon>mdi-close</v-icon>
+                    </v-btn>
+                  </v-card-actions>
                 </v-card>
               </v-col>
             </v-row>
@@ -121,17 +120,15 @@
 
 <script>
 export default {
-  data () {
-    return {
-      sources: [],
+  data: () => ({
+    sources: [],
       imageURL: '',
       title: '',
       file: null,
       test: [],
       blob: []
-    }
-  },
-  computed: {},
+  }),
+
   methods: {
     removeFile (imgSrc) {
       // console.log(imgSrc)
@@ -233,7 +230,6 @@ export default {
     this.preview()
   },
   created () {
-    console.log(this.$refs)
     //Update whenever remote data change
     this.db
       .changes({
@@ -244,3 +240,4 @@ export default {
   }
 }
 </script>
+
